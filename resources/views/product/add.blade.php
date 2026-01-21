@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Them san pham</title>
 </head>
 <body>
-    <h1>Add Product</h1>
-    <form action="{{ route('product.add') }}" method="POST">
+    <h1>Them san pham</h1>
+    <form action="{{ route('add') }}" method="POST">
         @csrf
-        <label for="name">Product Name:</label>
+        <label for="name">Ten san pham:</label>
         <input type="text" id="name" name="name" required>
         <br>
-        <label for="price">Price:</label>
+        <label for="price">Gia:</label>
         <input type="number" id="price" name="price" required>
         <br>
-        <button type="submit">Add Product</button>
+        <button type="submit">Them</button>
 </body>
 </html>
