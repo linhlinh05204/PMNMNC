@@ -16,7 +16,7 @@ Route::prefix('product')->group(function () {
         Route::get('/{id}/edit', function ($id) {
             return view('product.edit', ['id' => $id]);
         })->name('edit');
-        Route::get('/{id?}', function (string $id="linlinh") {
+        Route::get('/{id?}', function (string $id="123") {
             return view('product.detail', ['id' => $id]);
         })->name('detail');
 
@@ -26,7 +26,7 @@ Route::get('/sinhvien/{name?}/{mssv?}', function ($name = "Luong Xuan Hieu", $ms
     return view('sinhvien', ['name' => $name, 'mssv' => $mssv]);
 });
 
-Route::get('/banco/{n}', function ($n) {
+Route::get('/banco/{n}', function (int $n) {
     return view('banco', ['n' => $n]);
 });
 
