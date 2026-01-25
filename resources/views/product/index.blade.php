@@ -6,10 +6,11 @@
     <title>Danh sach san pham</title>
 </head>
 <body>
-    <h1>Danh sach san pham</h1>
+    <h1>{{ $title }}</h1>
     <td>
         <a href="{{ route('add') }}">Them san pham</a>
     </td>
+    <br><br>
     <table border="1" cellpadding="10" cellspacing="0">
     <tr>
         <th>ID</th>
@@ -18,7 +19,15 @@
         <th>Hành động</th>
     </tr>
 
-    <tr>
+    @foreach ($products as $product)
+    <tr>    
+        <td>{{ $product['id'] }}</td>
+        <td>{{ $product['name'] }}</td>
+        <td>{{ $product['price'] }} đ</td>
+        <td><a href="{{ route('detail', ['id' => $product['id']]) }}">Chi tiết</a></td>
+    </tr>
+    @endforeach
+    <!-- <tr>
         <td>1</td>
         <td>Iphone 15 Pro</td>
         <td>28,000,000 đ</td>
@@ -37,7 +46,7 @@
         <td>Xiaomi 14</td>
         <td>18,000,000 đ</td>
         <td><a href="/product/3">Chi tiết</a></td>
-    </tr>
+    </tr> -->
 </table>
 
 </body>

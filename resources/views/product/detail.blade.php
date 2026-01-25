@@ -7,6 +7,8 @@
 </head>
 <body>
     <h1>Chi Tiet San Pham</h1>
-    <h1>ID: {{ $id }}</h1>
+    <p>ID San Pham: {{ $id }}</p>
+
+
 </body>
 </html>
