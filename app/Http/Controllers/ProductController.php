@@ -3,10 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Middleware\CheckTimeAccess;
 
 class ProductController extends Controller
 {
     //
+    public function middleware() {
+        return [
+            CheckTimeAccess::class,
+        ];
+    }
+
     public function index() {
         $title = "Danh sach san pham";
         return view('product.index', ['title' => $title, 

@@ -10,6 +10,7 @@
     <ul>
         <li><a href ="/auth/register">Đăng kí</a></li>
         <li><a href ="/auth/login">Đăng nhập</a></li>
+        <li><a href ="/age">Nhập tuổi</a></li>
     </ul>
     <!-- <h1>Dang nhap</h1>
     <form action="{{ route('checkLogin') }}" method="POST">

@@ -3,10 +3,15 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AuthController;
+use App\Http\Middleware\CheckTimeAccess;
+use App\Http\Controllers\TestController;
+use App\Http\Middleware\CheckAge;
 
 Route::get('/', function () {
     return view('home');
 });
+
+//->middleware(CheckTimeAccess::class)
 
 Route::prefix('product')->group(function () {
         // Route::get('/', function () {
@@ -38,10 +43,14 @@ Route::prefix('auth')->group(function () {
     Route::controller(AuthController::class)->group(function () {
     Route::get('/login', 'login')->name('login');
     Route::post('/login', 'checkLogin')->name('checkLogin');
-    Route::get('/register', 'register')->name('register');
-    Route::post('/register', 'checkRegister')->name('checkRegister');
+    Route::get('/signin', 'signin')->name('signin');
+    Route::post('/signin', 'checkSignIn')->name('checkSignIn');
+    Route::get('/age', 'ageForm')->name('ageForm');
+    Route::post('/age', 'saveAge')->middleware(CheckAge::class)->name('saveAge');
     });
 });
+
+Route::resource('tests', TestController::class);
 
 Route::get('/sinhvien/{name?}/{mssv?}', function ($name = "Luong Xuan Hieu", $mssv = "123456") {
     return view('sinhvien', ['name' => $name, 'mssv' => $mssv]);
