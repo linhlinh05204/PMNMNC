@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -33,6 +34,11 @@ class AuthController extends Controller
     }
 
     public function checkLogin(Request $request) {
+        $account = $request->only('email', 'password');
+        if (Auth::attemps($account))
+            {
+                return redirect()->route('/admin');
+            }
         $username = $request->input('username');
         $password = $request->input('password');
         if ($username === 'linh' && $password === '1500267') {
@@ -50,5 +56,8 @@ class AuthController extends Controller
     public function saveAge(Request $request) {
         session(['age' => $request->input('age')]);
         return "Đã lưu tuổi của bạn vào session.";
+    }
+    public function logout() {
+
     }
 }

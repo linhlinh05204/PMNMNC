@@ -4,25 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Middleware\CheckTimeAccess;
+use App\Models\Product;
 
 class ProductController extends Controller
 {
     //
-    public function middleware() {
-        return [
-            CheckTimeAccess::class,
-        ];
-    }
+    // public function middleware() {
+    //     return [
+    //         CheckTimeAccess::class,
+    //     ];
+    // }
 
     public function index() {
-        $title = "Danh sach san pham";
-        return view('product.index', ['title' => $title, 
-            'products' =>[
-               ['id' => 1, 'name' => 'Product A', 'price' => 100],
-               ['id' => 2, 'name' => 'Product B', 'price' => 200],
-               ['id' => 3, 'name' => 'Product C', 'price' => 300],
-            ] 
-        ]);
+        $products = Product::all();
+        return view('product.index', ['products' => $products]);
     }
     public function getDetail($id="123") {
         return view('product.detail', ['id' => $id]);
@@ -31,12 +26,35 @@ class ProductController extends Controller
         return view('product.add');
     }
     public function store(Request $request) {
-        var_dump($request->input());
-        // $name = $request->input('name');
-        // $price = $request->input('price');
-        // return redirect()->route('index');
-        // return $request->all();
-        // var_dump($request->all());
+        $product = new Product();
+        $product->name = $request->input('name');
+        $product->description = $request->input('description');
+        $product->price = $request->input('price');
+        $product->stock = $request->input('stock');
+        $product->save();
+        return redirect()->route('index');
+    }
+    public function show($id) {
+        $product = Product::find($id);
+        return view('product.detail', ['product' => $product]);
+    }
+    public function edit($id) {
+        $product = Product::find($id);
+        return view('product.edit', ['product' => $product]);
+    }
+    public function update(Request $request, $id) {
+        $product = Product::find($id);
+        $product->name = $request->input('name');
+        $product->description = $request->input('description');
+        $product->price = $request->input('price');
+        $product->stock = $request->input('stock');
+        $product->save();
+        return redirect()->route('index');
+    }
+    public function delete($id) {
+        $product = Product::find($id);
+        $product->delete();
+        return redirect()->route('index');
     }
     
     

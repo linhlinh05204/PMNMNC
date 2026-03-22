@@ -4,8 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AuthController;
 use App\Http\Middleware\CheckTimeAccess;
-use App\Http\Controllers\TestController;
 use App\Http\Middleware\CheckAge;
+use App\Models\Category;
+use App\Http\Controllers\CategoryController;
 
 Route::get('/', function () {
     return view('home');
@@ -28,6 +29,10 @@ Route::prefix('product')->group(function () {
             Route::get('/add', 'create')->name('add');
             Route::get('/detail/{id?}', 'getDetail')->name('detail');
             Route::post('/add', 'store')->name('store');
+            Route::get('/{id}/edit', 'edit')->name('product.edit');
+            Route::post('/{id}/edit', 'update')->name('product.update');
+            Route::get('/{id}', 'show')->name('product.show');
+            Route::delete('/{id}', 'delete')->name('product.delete');
             // Route::get('/login', 'login')->name('login');
             // Route::post('/login', 'checkLogin')->name('checkLogin');
         });
@@ -47,10 +52,25 @@ Route::prefix('auth')->group(function () {
     Route::post('/signin', 'checkSignIn')->name('checkSignIn');
     Route::get('/age', 'ageForm')->name('ageForm');
     Route::post('/age', 'saveAge')->middleware(CheckAge::class)->name('saveAge');
+    Route::get('/logout', 'logout')->name('logout');
     });
 });
 
-Route::resource('tests', TestController::class);
+Route::prefix('category')->group(function () {
+    Route::get('/', [CategoryController::class, 'index'])->name('category.index');
+    Route::get('/create', [CategoryController::class, 'create'])->name('category.create');
+    Route::post('/store', [CategoryController::class, 'store'])->name('category.store');
+    Route::get('/{id}', [CategoryController::class, 'show'])->name('category.show');
+    Route::get('/{id}/edit', [CategoryController::class, 'edit'])->name('category.edit');
+    Route::post('/{id}/update', [CategoryController::class, 'update'])->name('category.update');
+    Route::delete('/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
+    Route::resource('category', CategoryController::class)->except(['show']);
+});
+
+Route::get('/admin', function () {
+    return view('layout.admin');
+});
+
 
 Route::get('/sinhvien/{name?}/{mssv?}', function ($name = "Luong Xuan Hieu", $mssv = "123456") {
     return view('sinhvien', ['name' => $name, 'mssv' => $mssv]);
